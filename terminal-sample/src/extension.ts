@@ -1,6 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
 	let NEXT_TERM_ID = 1;
@@ -24,6 +25,15 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('terminalTest.createTerminal', () => {
 		vscode.window.createTerminal(`Ext Terminal #${NEXT_TERM_ID++}`);
 		vscode.window.showInformationMessage('Hello World 2!');
+	}));
+	// vscode.window.createTerminal
+	context.subscriptions.push(vscode.commands.registerCommand('terminalTest.createTerminalWithIcon', () => {
+		vscode.window.createTerminal({
+			name: `Ext Terminal #${NEXT_TERM_ID++} with icon`,
+			shellPath: '/bin/bash',
+			iconPath: vscode.Uri.file(path.join(context.extensionPath, 'icon.svg'))
+		});
+		vscode.window.showInformationMessage('Hello World 2 from a terminal with iconPath set to an Uri');
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('terminalTest.createTerminalHideFromUser', () => {
 		vscode.window.createTerminal({
